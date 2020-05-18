@@ -1,9 +1,11 @@
 package com.go2it.education.entity;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 public class Merchant {
@@ -23,6 +25,10 @@ public class Merchant {
     //@Column(name=“sumToSentFromDB”)
     private Double sent;
     private java.sql.Date lastSent;
+
+    @OneToMany(mappedBy = "merchant", fetch = FetchType.EAGER) //how another option works?
+    private List<Payment> payments;
+
     public Merchant(){ }
 
     public int getId() {
@@ -111,5 +117,31 @@ public class Merchant {
 
     public void setLastSent(Date lastSent) {
         this.lastSent = lastSent;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
+    }
+
+    @Override
+    public String toString() {
+        return "Merchant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", bankName='" + bankName + '\'' +
+                ", swift='" + swift + '\'' +
+                ", account='" + account + '\'' +
+                ", charge=" + charge +
+                ", period=" + period +
+                ", minSum=" + minSum +
+                ", needToSend=" + needToSend +
+                ", sent=" + sent +
+                ", lastSent=" + lastSent +
+                ", payments=" + payments +
+                '}';
     }
 }

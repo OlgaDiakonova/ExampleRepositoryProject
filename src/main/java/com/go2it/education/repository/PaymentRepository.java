@@ -1,6 +1,5 @@
 package com.go2it.education.repository;
 
-import com.go2it.education.entity.Customer;
 import com.go2it.education.entity.Payment;
 import org.springframework.stereotype.Repository;
 
@@ -56,4 +55,5 @@ public class PaymentRepository implements IPaymentRepository {
             return false;
         }
     }
+
 }

@@ -2,38 +2,79 @@ package com.go2it.education;
 
 import com.go2it.education.entity.Customer;
 import com.go2it.education.entity.Merchant;
-import com.go2it.education.service.CustomerService;
-import com.go2it.education.service.ICustomerService;
-import com.go2it.education.service.MerchantService;
+import com.go2it.education.entity.Payment;
+import com.go2it.education.entity.dto.Result;
+import com.go2it.education.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 public class Application {
 
     public static void main(String[] args){
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        MerchantService merchantService = context.getBean(MerchantService.class);
+        IPaymentService pmntService = context.getBean(IPaymentService.class);
+        Payment p = pmntService.findById(68);
+        System.out.println(p.toString());
+
+        IMerchantService merchantService = context.getBean(IMerchantService.class);
+        List<Result> resList = merchantService.getTotalReport();
+        for (Result r: resList) {
+
+            System.out.format("%s , %8.2f \n", r.getName(), r.getSum());
+
+        }
+
+        List<Merchant> list = merchantService.getSortedByNeedToPay();
+        for (Merchant m: list) {
+
+            System.out.println("=======================");
+            System.out.println(m.getName() + "  " + m.getNeedToSend());
+
+            System.out.println(" ");
+            List<Payment> payments = m.getPayments();
+            for (Payment pmnt : payments) {
+                System.out.println(p.toString());
+            }
+
+        }
+
+
         ICustomerService customerService = context.getBean(ICustomerService.class);
-        Merchant m1 = merchantService.findById(1);
-        System.out.println("name = " + m1.getName());
+        Customer customer = customerService.findById(2);
+        if (customer != null){
 
-        Customer cust = customerService.findById(1);
-        System.out.println(cust.toString());
+            System.out.println(customer.toString());
+            List<Merchant> merchants = customer.getMerchants();
+            for (Merchant m : merchants) {
 
-        Customer customer = new Customer();
-        customer.setAddress("Independence st. 25, Malaga, Spain");
-        customer.setCcNo("11122233355589");
-        customer.setCcType("Master Card");
-        customer.seteMail("pavel@s.com");
-        LocalDate dt = LocalDate.of(2019, Month.FEBRUARY, 27);
-        customer.setMaturity(java.sql.Date.valueOf(dt));
-        customer.setName("VPavel Po");
+                System.out.println(m.getName());
 
-        customerService.save(customer);
-        System.out.println("id = " + customer.getId());
+            }
+
+        }
+
+
+//        Merchant m1 = merchantService.findById(1);
+//        System.out.println("name = " + m1.getName());
+//
+//        Customer cust = customerService.findById(1);
+//        System.out.println(cust.toString());
+//
+//        Customer customer = new Customer();
+//        customer.setAddress("Independence st. 25, Malaga, Spain");
+//        customer.setCcNo("11122233355589");
+//        customer.setCcType("Master Card");
+//        customer.seteMail("pavel@s.com");
+//        LocalDate dt = LocalDate.of(2019, Month.FEBRUARY, 27);
+//        customer.setMaturity(java.sql.Date.valueOf(dt));
+//        customer.setName("VPavel Po");
+//
+//        customerService.save(customer);
+//        System.out.println("id = " + customer.getId());
 
 //        System.out.println("The customer with id = 4 was removed successfully – " +
 //                customerService.remove(4));

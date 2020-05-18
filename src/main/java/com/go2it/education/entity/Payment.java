@@ -14,11 +14,10 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "merchantId")
     private Merchant merchant;
-
     private int customerId;
     private String goods;
     private double sumPaid;
-    private double chargePaid;
+    private Double chargePaid;
 
     public Payment() {
     }

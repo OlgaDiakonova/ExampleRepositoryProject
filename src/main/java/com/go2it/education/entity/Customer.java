@@ -2,6 +2,7 @@ package com.go2it.education.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -15,6 +16,10 @@ public class Customer {
     private String address;
     @Column(name = "cName")
     private String name;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "payment", joinColumns = @JoinColumn(name = "customerId"), inverseJoinColumns = @JoinColumn(name = "merchantId"))
+    private List<Merchant> merchants;
 
     public Customer() {
     }
@@ -86,5 +91,13 @@ public class Customer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Merchant> getMerchants() {
+        return merchants;
+    }
+
+    public void setMerchants(List<Merchant> merchants) {
+        this.merchants = merchants;
     }
 }
