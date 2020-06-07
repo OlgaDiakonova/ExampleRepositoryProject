@@ -4,9 +4,14 @@ import com.go2it.education.entity.Merchant;
 import com.go2it.education.entity.dto.Result;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IMerchantService {
-    public Merchant findById(int id);
-    public List<Result> getTotalReport();
-    public List<Merchant> getSortedByNeedToPay();
+    Optional<Merchant> findById(int id);
+
+    void save(Merchant m);
+
+    List<Result> getTotalReport();
+
+    List<Merchant> getSortedByNeedToPay();
 }

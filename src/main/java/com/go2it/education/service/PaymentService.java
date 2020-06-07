@@ -1,36 +1,38 @@
 package com.go2it.education.service;
 
 import com.go2it.education.entity.Payment;
-import com.go2it.education.repository.PaymentRepository;
+import com.go2it.education.repository.IPaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class PaymentService implements IPaymentService {
     @Autowired
-    private PaymentRepository paymentRepository;
+    private IPaymentRepository repository;
 
     @Override
-    public Payment findById(int id) {
-        return paymentRepository.findById(id);
+    public Optional<Payment> findById(long id) {
+        return repository.findById(id);
     }
 
-    @Override
     @Transactional
-    public void save(Payment payment) {
-        paymentRepository.save(payment);
+    @Override
+    public void save(Payment p) {
+        repository.save(p);
     }
 
-    @Override
-    @Transactional
-    public boolean remove(int id) {
-        return paymentRepository.remove(id);
-    }
-
-    @Override
-    @Transactional
-    public boolean remove(Payment payment) {
-        return paymentRepository.remove(payment);
-    }
+//    @Override
+//    @Transactional
+//    public boolean remove(int id) {
+//        return paymentRepository.remove(id);
+//    }
+//
+//    @Override
+//    @Transactional
+//    public boolean remove(Payment payment) {
+//        return paymentRepository.remove(payment);
+//    }
 }

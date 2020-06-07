@@ -26,7 +26,7 @@ public class Merchant {
     private Double sent;
     private java.sql.Date lastSent;
 
-    @OneToMany(mappedBy = "merchant", fetch = FetchType.EAGER) //how another option works?
+    @OneToMany(mappedBy = "merchant") //how another option works?
     private List<Payment> payments;
 
     public Merchant(){ }

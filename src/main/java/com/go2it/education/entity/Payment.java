@@ -14,7 +14,9 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "merchantId")
     private Merchant merchant;
-    private int customerId;
+    @ManyToOne
+    @JoinColumn(name = "customerId")
+    private Customer customer;
     private String goods;
     private double sumPaid;
     private Double chargePaid;
@@ -46,12 +48,16 @@ public class Payment {
         this.merchant = merchant;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setChargePaid(Double chargePaid) {
+        this.chargePaid = chargePaid;
     }
 
     public String getGoods() {
@@ -84,7 +90,7 @@ public class Payment {
                 "id=" + id +
                 ", dt=" + dt +
                 ", merchantId=" + merchant.getId() +
-                ", customerId=" + customerId +
+                ", customerId=" + customer.getId() +
                 ", goods='" + goods + '\'' +
                 ", sumPaid=" + sumPaid +
                 ", chargePaid=" + chargePaid +

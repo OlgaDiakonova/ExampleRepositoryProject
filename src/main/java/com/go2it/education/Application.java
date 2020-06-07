@@ -16,46 +16,49 @@ public class Application {
 
     public static void main(String[] args){
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        IPaymentService pmntService = context.getBean(IPaymentService.class);
-        Payment p = pmntService.findById(68);
-        System.out.println(p.toString());
-
         IMerchantService merchantService = context.getBean(IMerchantService.class);
-        List<Result> resList = merchantService.getTotalReport();
-        for (Result r: resList) {
+        merchantService.findById(1).ifPresent(System.out::println);
 
-            System.out.format("%s , %8.2f \n", r.getName(), r.getSum());
+//        IPaymentService pmntService = context.getBean(IPaymentService.class);
+//        Payment p = pmntService.findById(68);
+//        System.out.println(p.toString());
+//
+//        IMerchantService merchantService = context.getBean(IMerchantService.class);
+//        List<Result> resList = merchantService.getTotalReport();
+//        for (Result r: resList) {
+//
+//            System.out.format("%s , %8.2f \n", r.getName(), r.getSum());
+//
+//        }
+//
+//        List<Merchant> list = merchantService.getSortedByNeedToPay();
+//        for (Merchant m: list) {
+//
+//            System.out.println("=======================");
+//            System.out.println(m.getName() + "  " + m.getNeedToSend());
+//
+//            System.out.println(" ");
+//            List<Payment> payments = m.getPayments();
+//            for (Payment pmnt : payments) {
+//                System.out.println(p.toString());
+//            }
+//
+//        }
 
-        }
 
-        List<Merchant> list = merchantService.getSortedByNeedToPay();
-        for (Merchant m: list) {
-
-            System.out.println("=======================");
-            System.out.println(m.getName() + "  " + m.getNeedToSend());
-
-            System.out.println(" ");
-            List<Payment> payments = m.getPayments();
-            for (Payment pmnt : payments) {
-                System.out.println(p.toString());
-            }
-
-        }
-
-
-        ICustomerService customerService = context.getBean(ICustomerService.class);
-        Customer customer = customerService.findById(2);
-        if (customer != null){
-
-            System.out.println(customer.toString());
-            List<Merchant> merchants = customer.getMerchants();
-            for (Merchant m : merchants) {
-
-                System.out.println(m.getName());
-
-            }
-
-        }
+//        ICustomerService customerService = context.getBean(ICustomerService.class);
+//        Customer customer = customerService.findById(2);
+//        if (customer != null){
+//
+//            System.out.println(customer.toString());
+//            List<Merchant> merchants = customer.getMerchants();
+//            for (Merchant m : merchants) {
+//
+//                System.out.println(m.getName());
+//
+//            }
+//
+//        }
 
 
 //        Merchant m1 = merchantService.findById(1);
